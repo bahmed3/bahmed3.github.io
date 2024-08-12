@@ -16,23 +16,24 @@
 <body>
     <!-- Navigation Bar -->
     <header>
-        <nav>
-            <div class="logo">
-                <a href="#"><img src="images/logo.png" alt="Green Days Logo"></a>
-            </div>
-            <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#solutions">Solutions</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#get-started" class="btn">Get Started</a></li>
-            </ul>
-            <div class="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-        </nav>
-    </header>
+      <nav>
+          <div class="logo">
+              <a href="#"><img src="images/logo.png" alt="Green Days Logo"></a>
+          </div>
+          <ul class="nav-links">
+              <li><a href="#about">About</a></li>
+              <li><a href="#solutions">Solutions</a></li>
+              <li><a href="#contact">Contact</a></li>
+              <li><a href="#get-started" class="btn">Get Started</a></li>
+          </ul>
+          <div class="hamburger">
+              <span class="bar"></span>
+              <span class="bar"></span>
+              <span class="bar"></span>
+          </div>
+      </nav>
+  </header>
+  
 
     <!-- Hero Section -->
     <section class="hero" id="home">
@@ -44,7 +45,7 @@
     </section>
 
     <!-- About Section -->
-    <section class="about" id="about">
+    <section class="about fade-in" id="about">
         <div class="container">
             <h2>About Us</h2>
             <p>At Green Days, we're committed to pioneering sustainable technologies that make a real difference. Our mission is to innovate and implement eco-friendly solutions that pave the way for a healthier planet.</p>
@@ -52,7 +53,7 @@
     </section>
 
     <!-- Solutions Section -->
-    <section class="solutions" id="solutions">
+    <section class="solutions fade-in" id="solutions">
         <div class="container">
             <h2>Our Solutions</h2>
             <div class="cards">
@@ -73,7 +74,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section class="contact" id="contact">
+    <section class="contact fade-in" id="contact">
         <div class="container">
             <h2>Contact Us</h2>
             <p>Have questions or want to collaborate? Reach out to us!</p>
@@ -88,14 +89,41 @@
         </div>
     </footer>
 
-    <!-- JavaScript for Mobile Navigation -->
+    <!-- JavaScript for Navbar Shrink and Scroll Animations -->
     <script>
-        const hamburger = document.querySelector('.hamburger');
-        const navLinks = document.querySelector('.nav-links');
+        // Navbar Shrink on Scroll
+        window.onscroll = function() {scrollFunction()};
 
-        hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('open');
-            hamburger.classList.toggle('toggle');
+        function scrollFunction() {
+            const header = document.querySelector("header");
+            if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+                header.classList.add("shrink");
+            } else {
+                header.classList.remove("shrink");
+            }
+        }
+
+        // Animations on Scroll
+        const faders = document.querySelectorAll('.fade-in');
+
+        const appearOptions = {
+            threshold: 0.2, // Element appears when 20% visible
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return;
+                } else {
+                    entry.target.classList.add('visible');
+                    appearOnScroll.unobserve(entry.target);
+                }
+            });
+        }, appearOptions);
+
+        faders.forEach(fader => {
+            appearOnScroll.observe(fader);
         });
     </script>
 </body>

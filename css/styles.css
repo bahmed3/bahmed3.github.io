@@ -20,50 +20,83 @@ header {
   width: 100%;
   top: 0;
   z-index: 100;
+  padding: 0 10%; /* Remove vertical padding */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px; /* Set initial height */
+  transition: height 0.3s ease, background-color 0.3s ease;
+}
+
+header.shrink {
+  height: 50px; /* Reduce height when shrunk */
+  background-color: #1a1a1a; /* Slightly darker when shrunk */
 }
 
 nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 10%;
+  width: 100%; /* Ensure nav takes full width */
 }
 
-nav .logo img {
-  width: 50px;
+.logo {
+  flex: 1; /* Ensure the logo stays on the left */
 }
 
-nav .nav-links {
+.logo img {
+  height: 100%; /* Make the logo fill the header's height */
+  max-height: 50px; /* Ensure the logo doesn't grow too large */
+  transition: max-height 0.3s ease;
+}
+
+header.shrink .logo img {
+  max-height: 35px; /* Smaller logo when shrunk */
+}
+
+.nav-links {
   list-style: none;
   display: flex;
+  justify-content: flex-end; /* Align nav items to the right */
+  flex: 2; /* Take up remaining space on the right */
+  gap: 20px; /* Space between nav items */
 }
 
-nav .nav-links li {
-  margin: 0 15px;
+.nav-links li {
+  margin: 0;
 }
 
-nav .nav-links a {
+.nav-links a {
   color: #ffffff;
   text-decoration: none;
   font-size: 1rem;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, font-size 0.3s ease;
 }
 
-nav .nav-links a:hover {
+header.shrink .nav-links a {
+  font-size: 0.9rem; /* Slightly smaller font */
+}
+
+.nav-links a:hover {
   color: #4CAF50;
 }
 
-nav .btn {
+.btn {
   padding: 10px 20px;
   background-color: #4CAF50;
   border: none;
   border-radius: 25px;
   color: #ffffff;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, padding 0.3s ease, font-size 0.3s ease;
 }
 
-nav .btn:hover {
+header.shrink .btn {
+  padding: 8px 16px; /* Smaller button */
+  font-size: 0.9rem;
+}
+
+.btn:hover {
   background-color: #45a049;
 }
 
@@ -82,9 +115,77 @@ nav .btn:hover {
   transition: all 0.3s ease;
 }
 
+/* Responsive Design */
+@media (max-width: 768px) {
+  .nav-links {
+      position: fixed;
+      right: 0;
+      height: 100vh;
+      top: 0;
+      background-color: #1f1f1f;
+      flex-direction: column;
+      align-items: center;
+      width: 50%;
+      transform: translateX(100%);
+      transition: transform 0.3s ease-in;
+  }
+
+  .nav-links li {
+      margin: 50px 0;
+  }
+
+  .nav-links.open {
+      transform: translateX(0%);
+  }
+
+  .hamburger {
+      display: flex;
+  }
+
+  .hamburger.toggle .bar:nth-child(1) {
+      transform: rotate(-45deg) translate(-5px, 6px);
+  }
+
+  .hamburger.toggle .bar:nth-child(2) {
+      opacity: 0;
+  }
+
+  .hamburger.toggle .bar:nth-child(3) {
+      transform: rotate(45deg) translate(-5px, -6px);
+  }
+
+  .hero h1 {
+      font-size: 2.5rem;
+  }
+
+  .hero p {
+      font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-links {
+      width: 100%;
+  }
+
+  .hero {
+      padding: 0 5%;
+  }
+
+  section {
+      padding: 60px 5%;
+  }
+
+  .btn-primary, .btn-secondary {
+      padding: 10px 20px;
+      font-size: 1rem;
+  }
+}
+
+
 /* Hero Section */
 .hero {
-  background: url('../images/hero-background.jpg') center/cover no-repeat;
+  background: #eaeaea; /* Change background to white */
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -95,29 +196,22 @@ nav .btn:hover {
   margin-top: 80px; /* To offset the fixed navbar */
 }
 
-.hero::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(18, 18, 18, 0.6);
-}
-
 .hero-content {
   position: relative;
   z-index: 1;
+  color: #000000; /* Change text color to black */
 }
 
 .hero h1 {
   font-size: 3rem;
   margin-bottom: 20px;
+  color: #000000; /* Ensure header is black */
 }
 
 .hero p {
   font-size: 1.5rem;
   margin-bottom: 30px;
+  color: #000000; /* Ensure subtext is black */
 }
 
 .btn-primary {
@@ -135,6 +229,7 @@ nav .btn:hover {
 .btn-primary:hover {
   background-color: #45a049;
 }
+
 
 /* Sections */
 section {
@@ -215,6 +310,27 @@ footer {
 
 footer p {
   font-size: 1rem;
+}
+
+/* Fade-In Animation for Scroll */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(20px); /* Start slightly below */
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0); /* End at original position */
+  }
+}
+
+.fade-in {
+  opacity: 0;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in.visible {
+  animation: fadeIn 0.8s forwards;
 }
 
 /* Responsive Design */
