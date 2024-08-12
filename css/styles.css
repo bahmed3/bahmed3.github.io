@@ -45,13 +45,13 @@ nav {
 }
 
 .logo img {
-  height: 100%; /* Make the logo fill the header's height */
-  max-height: 50px; /* Ensure the logo doesn't grow too large */
+  height: 100px; /* Increase the height to 80px */
+  width: auto; /* Maintain aspect ratio by setting width to auto */
   transition: max-height 0.3s ease;
 }
 
 header.shrink .logo img {
-  max-height: 35px; /* Smaller logo when shrunk */
+  height: 50px; /* Reduce the logo size when the navbar shrinks */
 }
 
 .nav-links {
@@ -409,4 +409,35 @@ footer p {
       padding: 10px 20px;
       font-size: 1rem;
   }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Keyframes for Fade-In Animation */
+@keyframes fadeInUp {
+  from {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+/* Apply the Animation to Hero Text */
+.hero-content h1,
+.hero-content p {
+  opacity: 0;
+  animation: fadeInUp 1.5s ease-out forwards;
+}
+
+.hero-content h1 {
+  animation-delay: 0.5s;
+}
+
+.hero-content p {
+  animation-delay: 1s;
 }
